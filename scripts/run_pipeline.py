@@ -102,7 +102,7 @@ class Pipeline:
             regions_per_year_grid = sum(
                 len(builder.get_available_regions(g, y))
                 for g in grids
-                for y in years_per_grid[g]
+                for y in builder.get_available_years(g)
             )
 
             print_info(f"Loaded {len(grids)} grids, {regions_per_year_grid} network instances")
