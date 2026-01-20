@@ -1,0 +1,130 @@
+# Urban Energy Resilience Project Configuration
+# 城市能源韧性研究项目配置文件
+
+# ============================================
+# 路径配置
+# ============================================
+paths:
+  data_dir: "data"
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  external_data_dir: "data/external"
+  output_dir: "outputs"
+  figures_dir: "outputs/figures"
+  tables_dir: "outputs/tables"
+  results_dir: "outputs/results"
+
+# ============================================
+# 数据文件配置
+# ============================================
+data_files:
+  # 网络数据
+  networks: "data/raw/all_networks.pkl"
+  env_vars: "data/raw/env_vars.pkl"
+
+  # GDP和人口数据
+  gdp_population: "data/raw/env_GDP_Population.pkl"
+
+  # 调整后的网络
+  gdp_adjusted_networks: "data/raw/gdp_adjusted_networks.pkl"
+  population_adjusted_networks: "data/raw/population_adjusted_networks.pkl"
+
+  # 输出文件
+  resilience_summary: "outputs/tables/resilience_summary.xlsx"
+  nci_results: "outputs/tables/nci_results.xlsx"
+
+# ============================================
+# 研究参数
+# ============================================
+study:
+  # 时间跨度
+  start_year: 2001
+  end_year: 2020
+  years: [2001, 2005, 2010, 2015, 2020]
+
+  # 区域电网
+  regions:
+    - "华北"
+    - "东北"
+    - "华东"
+    - "华中"
+    - "西北"
+    - "南方"
+
+# ============================================
+# 攻击-恢复模拟参数
+# ============================================
+attack_recovery:
+  # 模拟次数
+  n_simulations: 1000
+
+  # 删除边的比例范围
+  edge_removal_range: [0.01, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
+
+  # 恢复策略
+  recovery_strategies: ["random", "importance", "efficiency"]
+
+  # 并行进程数 (根据CPU核心数调整)
+  n_processes: 16
+
+# ============================================
+# 韧性指标权重
+# ============================================
+resilience_weights:
+  # 一级响应（经济）
+  level1:
+    economic_affluence: 0.4
+    energy_investment_ratio: 0.3
+    energy_affluence: 0.3
+
+  # 二级响应（人口）
+  level2:
+    per_capita_energy_affluence: 0.5
+    population_factor: 0.3
+    load_shedding_capability: 0.2
+
+  # 三级响应（结构）
+  level3:
+    ci_index: 0.6
+    network_structure: 0.2
+    node_importance: 0.2
+
+# ============================================
+# 计算配置
+# ============================================
+computation:
+  # 是否使用并行计算
+  use_parallel: true
+
+  # 随机种子（用于可复现性）
+  random_seed: 42
+
+  # 是否保存中间结果
+  save_intermediate: true
+
+# ============================================
+# 可视化配置
+# ============================================
+visualization:
+  # 图表保存格式
+  figure_format: "png"
+  figure_dpi: 300
+
+  # 颜色主题
+  color_palette: "Set2"
+
+  # 图表字体大小
+  font_size: 12
+
+# ============================================
+# 日志配置
+# ============================================
+logging:
+  # 日志级别: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+
+  # 日志文件路径
+  file: "outputs/project.log"
+
+  # 是否输出到控制台
+  console: true
