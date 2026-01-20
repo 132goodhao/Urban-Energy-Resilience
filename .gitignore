@@ -65,3 +65,7 @@ outputs/tables/*.csv
 
 # Keep empty directories
 !.gitkeep
+
+
+# Local session log (仅本地使用，不提交)
+SESSION_LOG.md
