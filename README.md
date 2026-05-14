@@ -123,9 +123,7 @@ The framework identifies:
 
 ## Citation
 
-If you use this code, please cite the associated paper:
-
-> *Spatiotemporal Assessment of Provincial Energy Resilience in China: A Three-Dimensional Framework Based on Graph Theory*.
+If you use this code, please contact the authors for citation details.
 
 ## License
 
