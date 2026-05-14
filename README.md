@@ -1,177 +1,132 @@
-# Urban Energy Resilience
+# Spatiotemporal Assessment of Provincial Energy Resilience in China
 
-> 中国城市能源系统韧性研究 —— 基于复杂网络分析
+**A Three-Dimensional Framework Based on Graph Theory**
 
-## 项目概述
+This repository contains the open-source code for the research paper *"Spatiotemporal Assessment of Provincial Energy Resilience in China: A Three-Dimensional Framework Based on Graph Theory"*.
 
-本项目采用复杂网络分析方法，研究中国城市能源系统的抗干扰能力和韧性。通过建立三级响应韧性评估体系（经济、人口、结构），分析六大区域电网（华北、东北、华东、华中、西北、南方）在2001-2020年间的能源系统韧性特征。
+## Research Framework
 
-### 核心研究框架
+The framework quantifies energy resilience through three dimensions mapped to three network representations of provincial energy systems:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   城市能源系统韧性评估体系                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  一级响应（经济）          二级响应（社会）      三级响应（结构） │
-│  ┌───────────────┐    ┌───────────────┐    ┌───────────────┐│
-│  │ 经济富裕度    │    │ 人均能耗富裕度 │    │ 集成影响力CI  ││
-│  │ 能源投资比例  │    │ 人口因素      │    │ 网络结构      ││
-│  │ 能耗富裕度    │    │ 主动降负荷能力 │    │ 节点重要性    ││
-│  └───────────────┘    └───────────────┘    └───────────────┘│
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+<img src="docs/framework.png" width="100%" alt="Three-dimensional analytical framework for quantifying energy resilience across preparation, disruption, and recovery phases.">
 
-## 项目结构
+- **Economic Buffering Resilience (EBR)** — capacity to mobilize economic resources for energy procurement during disruptions, derived from a GDP-normalized derivative network.
+- **Demand Curtailment Resilience (DCR)** — compressible load margin available through managed demand-side curtailment, derived from a population-normalized derivative network.
+- **Network Disintegration Resilience (NDR)** — intrinsic topological robustness of the energy flow network under cascading failure, assessed via full-trajectory bootstrap simulation on the base energy flow network.
+
+A novel **transformation dependency** index (*tau*) is introduced to quantify the fraction of total energy supply that must transit intermediate transformation nodes, serving as the dominant structural predictor of resilience.
+
+## Key Findings
+
+- **Resilience-economy inversion**: Coastal economic hubs are economically robust but structurally fragile; inland energy-exporting provinces achieve ~10.6% higher NDR despite limited economic resources.
+- **Transformation dependency** alone accounts for over half of cross-provincial resilience variance (R² = 0.549), a signal that conventional supply diversity metrics (Shannon Entropy, HHI) cannot detect.
+- **Network-level resource curse**: Energy-exporting provinces lost 27.3% NDR between 2010–2020 due to export-oriented specialization, while importing regions gained 6.8%.
+- **Inter-regional coordination**: The framework independently validates 50% of nationally planned AI data center hubs and identifies three previously unrecognized strategic energy corridors.
+
+## Study Scope
+
+| Parameter | Coverage |
+|---|---|
+| Spatial | 30 provincial-level regions in mainland China |
+| Temporal | 2001–2020 (600 province-year observations) |
+| Data sources | China Energy Statistical Yearbook; National Bureau of Statistics (GDP, population) |
+| Network scale | ~50–60 nodes per province, several hundred directed weighted edges |
+
+Six grid regions are analyzed: North China, Northeast, East China, Central China, Northwest, and South China.
+
+## Project Structure
 
 ```
 Urban-energy-resilience/
-│
-├── README.md              # 项目说明
-├── requirements.txt       # Python依赖
-├── .gitignore            # Git忽略规则
-│
-├── config/
-│   └── config.yaml       # 项目配置文件
-│
+├── config/                   # Configuration (config.yaml)
 ├── data/
-│   ├── raw/              # 原始数据（只读）
-│   ├── processed/        # 预处理后的中间数据
-│   └── external/         # 新增数据源
-│
-├── src/                  # 源代码
-│   ├── preprocessing/    # 网络数据预处理
-│   ├── network_analysis/ # 网络结构分析
-│   ├── resilience/       # 韧性分析核心
-│   ├── attack_simulation/# 攻击-恢复模拟
-│   ├── validation/       # 数据验证
-│   └── visualization/    # 结果可视化
-│
-├── scripts/              # 主流程脚本
-│   ├── run_pipeline.py   # 完整流程入口
-│   ├── run_attack_recovery.py
-│   └── run_analysis.py
-│
-├── notebooks/            # 探索性分析
-│
-├── outputs/              # 输出结果
-│   ├── figures/          # 图表
-│   ├── tables/           # 数据表
-│   └── results/          # 分析结果
-│
-├── tests/                # 单元测试
-│
-└── venv/                 # 虚拟环境
+│   ├── raw/                  # Input data (energy balance tables, GDP, population)
+│   └── processed/            # Preprocessed intermediate data
+├── src/
+│   ├── preprocessing/        # Network construction from energy balance tables
+│   ├── network_analysis/     # Structural metrics (CI, NCI, Shannon, HHI)
+│   ├── resilience/           # Three-dimensional resilience computation
+│   │   ├── level1_economy.py     # EBR: economic buffering
+│   │   ├── level2_population.py  # DCR: demand curtailment
+│   │   └── level3_structure.py   # NDR: network disintegration
+│   ├── attack_simulation/    # Bootstrap cascading failure simulation
+│   ├── validation/           # Data integrity checks
+│   └── visualization/        # Spatial maps, Sankey diagrams, plots
+├── scripts/
+│   ├── run_pipeline.py       # End-to-end analysis pipeline
+│   └── visualize_results.py  # Figure generation
+├── outputs/                  # Generated figures, tables, results
+├── notebooks/                # Exploratory analysis
+├── docs/                     # Documentation and figures
+└── tests/                    # Unit tests
 ```
 
-## 快速开始
+## Getting Started
 
-### 1. 环境设置
+### Prerequisites
+
+- Python 3.8+
+- See `requirements.txt` for package dependencies (NetworkX, NumPy, Pandas, Matplotlib, etc.)
+
+### Installation
 
 ```bash
-# 创建虚拟环境
-python -m venv venv
+git clone https://github.com/<username>/Urban-energy-resilience.git
+cd Urban-energy-resilience
 
-# 激活虚拟环境
+python -m venv venv
 # Windows:
 venv\Scripts\activate
 # Linux/Mac:
 source venv/bin/activate
 
-# 安装依赖
 pip install -r requirements.txt
 ```
 
-### 2. 数据准备
+### Data Preparation
 
-将原始数据文件放入 `data/raw/` 目录：
-- `all_networks.pkl` - 能源网络结构
-- `env_vars.pkl` - 节点分类数据
-- `env_GDP_Population.pkl` - GDP和人口数据
+Place input data files in `data/raw/`:
 
-### 3. 运行分析
+- Provincial energy balance tables (from China Energy Statistical Yearbook)
+- GDP and population data (from National Bureau of Statistics)
+
+### Running the Analysis
 
 ```bash
-# 运行完整分析流程
+# Full pipeline
 python scripts/run_pipeline.py --level all
 
-# 运行攻击-恢复模拟
-python scripts/run_attack_recovery.py --n-simulations 1000
-
-# 运行特定级别韧性计算
-python scripts/run_analysis.py --level 1 --years 2015 2020
+# Individual dimensions
+python scripts/run_pipeline.py --level 1   # EBR only
+python scripts/run_pipeline.py --level 2   # DCR only
+python scripts/run_pipeline.py --level 3   # NDR only (bootstrap simulation)
 ```
 
-## 核心算法
+The NDR computation uses parallel bootstrap simulation (default: 1000 iterations, 16 threads). Adjust `n_processes` and `n_simulations` in `config/config.yaml`.
 
-### 1. 集成影响力 (Collective Influence, CI)
+## Core Methodology
 
-计算节点在网络中的综合重要性，用于评估能源网络中各节点的战略地位。
+### Network Construction
 
-### 2. 随机攻击-恢复模拟
+Each province-year is modeled as a directed weighted graph G = (V, E) with five node types: supply, energy carrier, transformation, consumption, and loss. Edge weights represent energy flows in 10,000 tce. Two derivative networks are generated by normalizing edge weights by GDP and population, respectively.
 
-采用Bootstrap方法，模拟网络边随机删除后的系统响应和恢复过程，评估网络的抗干扰能力。
+### Bootstrap Cascading Failure
 
-### 3. NCI指数
+For NDR computation, random sequential edge removal with recursive downstream flow propagation simulates cascading failures. 1000 bootstrap iterations produce attack and recovery trajectories, from which Average Attack Performance (AAP) and Average Recovery Performance (ARP) are derived.
 
-综合网络复杂指数，基于熵权-TOPSIS方法计算，用于量化网络结构的复杂性。
+### Inter-regional Coordination
 
-## 研究对象
+The framework identifies:
+1. **AI data center candidates** — provinces with high EBR and resilient supply neighborhoods
+2. **Firm energy contracts** — pairing high-NDR suppliers with high-EBR demanders
+3. **Non-firm energy contracts** — pairing high-NDR suppliers with high-DCR demanders
 
-| 区域电网 | 覆盖范围 |
-|---------|---------|
-| 华北 | 北京、天津、河北、山西、山东 |
-| 东北 | 辽宁、吉林、黑龙江 |
-| 华东 | 上海、江苏、浙江、安徽、福建 |
-| 华中 | 河南、湖北、湖南、江西 |
-| 西北 | 陕西、甘肃、青海、宁夏、新疆 |
-| 南方 | 广东、广西、云南、贵州、海南 |
+## Citation
 
-## 配置说明
+If you use this code, please cite the associated paper:
 
-项目配置文件 `config/config.yaml` 包含：
+> *Spatiotemporal Assessment of Provincial Energy Resilience in China: A Three-Dimensional Framework Based on Graph Theory*.
 
-- 路径配置
-- 数据文件配置
-- 研究参数（年份、区域）
-- 攻击-恢复模拟参数
-- 韧性指标权重
-- 计算配置（并行、随机种子）
-- 可视化配置
-- 日志配置
+## License
 
-## 性能优化
-
-项目使用多进程并行计算，默认配置为16进程，比单线程快约10倍。可在 `config.yaml` 中调整 `n_processes` 参数。
-
-## 版本控制
-
-使用 Git 进行版本管理：
-
-```bash
-# 初始化仓库
-git init
-
-# 添加文件
-git add .
-
-# 提交
-git commit -m "Initial project structure"
-```
-
-## 开发进度
-
-- [x] Phase 1: 项目骨架 + 配置管理
-- [ ] Phase 2: 迁移预处理模块
-- [ ] Phase 3: 迁移核心计算模块
-- [ ] Phase 4: 建立主流程
-- [ ] Phase 5: Git 初始化
-
-## 许可证
-
-本研究项目仅用于学术研究目的。
-
-## 联系方式
-
-如有问题或建议，请联系项目维护者。
+This project is for academic research purposes.
