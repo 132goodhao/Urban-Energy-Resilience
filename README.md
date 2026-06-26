@@ -25,12 +25,12 @@ A novel **transformation dependency** index (*tau*) is introduced to quantify th
 
 ## Study Scope
 
-| Parameter | Coverage |
-|---|---|
-| Spatial | 30 provincial-level regions in mainland China |
-| Temporal | 2001–2020 (600 province-year observations) |
-| Data sources | China Energy Statistical Yearbook; National Bureau of Statistics (GDP, population) |
-| Network scale | ~50–60 nodes per province, several hundred directed weighted edges |
+| Parameter     | Coverage                                                                           |
+| ------------- | ---------------------------------------------------------------------------------- |
+| Spatial       | 30 provincial-level regions in mainland China                                      |
+| Temporal      | 2001–2020 (600 province-year observations)                                         |
+| Data sources  | China Energy Statistical Yearbook; National Bureau of Statistics (GDP, population) |
+| Network scale | ~50–60 nodes per province, several hundred directed weighted edges                 |
 
 Six grid regions are analyzed: North China, Northeast, East China, Central China, Northwest, and South China.
 
@@ -117,6 +117,7 @@ For NDR computation, random sequential edge removal with recursive downstream fl
 ### Inter-regional Coordination
 
 The framework identifies:
+
 1. **AI data center candidates** — provinces with high EBR and resilient supply neighborhoods
 2. **Firm energy contracts** — pairing high-NDR suppliers with high-EBR demanders
 3. **Non-firm energy contracts** — pairing high-NDR suppliers with high-DCR demanders
@@ -124,6 +125,10 @@ The framework identifies:
 ## Citation
 
 If you use this code, please contact the authors for citation details.
+
+For any questions regarding code details, please contact the author.
+
+132goodhao@gmail.com
 
 ## License
 
